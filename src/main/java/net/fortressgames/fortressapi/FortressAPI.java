@@ -5,7 +5,7 @@ import net.fortressgames.fortressapi.eventlisteners.CloseInventoryEventListener;
 import net.fortressgames.fortressapi.eventlisteners.InventoryClickEventListener;
 import net.fortressgames.fortressapi.listeners.CloseInventoryListener;
 import net.fortressgames.fortressapi.listeners.InventoryClickListener;
-import net.fortressgames.fortressapi.players.UserModule;
+import net.fortressgames.fortressapi.players.FortressPlayerModule;
 import net.fortressgames.fortressapi.utils.ConsoleMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -32,7 +32,7 @@ public class FortressAPI extends JavaPlugin {
 		instance = this;
 
 		// Register events
-		this.getServer().getPluginManager().registerEvents(UserModule.getInstance(), this);
+		this.getServer().getPluginManager().registerEvents(FortressPlayerModule.getInstance(), this);
 
 		this.getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
 		this.getServer().getPluginManager().registerEvents(new CloseInventoryListener(), this);

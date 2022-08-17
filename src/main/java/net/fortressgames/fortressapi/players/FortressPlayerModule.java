@@ -10,14 +10,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class UserModule implements Listener {
+public class FortressPlayerModule implements Listener {
 
-	private static UserModule instance;
+	private static FortressPlayerModule instance;
 	private final HashMap<Player, FortressPlayer> users = new HashMap<>();
 
-	public static UserModule getInstance() {
+	public static FortressPlayerModule getInstance() {
 		if(instance == null) {
-			instance = new UserModule();
+			instance = new FortressPlayerModule();
 		}
 
 		return instance;

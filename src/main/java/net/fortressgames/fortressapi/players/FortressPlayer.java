@@ -2,6 +2,7 @@ package net.fortressgames.fortressapi.players;
 
 import lombok.Getter;
 import org.bukkit.GameMode;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
@@ -16,7 +17,7 @@ public class FortressPlayer extends CustomPlayer {
 	}
 
 	public static FortressPlayer getPlayer(Player player) {
-		return UserModule.getInstance().getUser(player);
+		return FortressPlayerModule.getInstance().getUser(player);
 	}
 
 	public InventoryView getOpenInventory() {
@@ -27,5 +28,11 @@ public class FortressPlayer extends CustomPlayer {
 	}
 	public void setItemInOffHand(ItemStack itemInOffHand) {
 		player.getInventory().setItemInOffHand(itemInOffHand);
+	}
+	public void sendMessage(String message) {
+		player.sendMessage(message);
+	}
+	public World getWorld() {
+		return player.getWorld();
 	}
 }
