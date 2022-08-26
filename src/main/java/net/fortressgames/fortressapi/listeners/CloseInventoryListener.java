@@ -21,7 +21,9 @@ public class CloseInventoryListener implements Listener {
 	public void close(InventoryCloseFortressEvent e) {
 		FortressPlayer player = e.getPlayer();
 
-		if(player != null && player.getOpenMenu() != null && !singleSub.contains(player.getPlayer())) {
+		if(player == null) return;
+
+		if(player.getOpenMenu() != null && !singleSub.contains(player.getPlayer())) {
 
 			if(player.getOpenMenu().getInventoryName().equalsIgnoreCase(player.getOpenInventory().getTitle())) {
 				for(LoopTask loopTask : player.getOpenMenu().getLoopTasks().values()) {
