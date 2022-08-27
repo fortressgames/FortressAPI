@@ -1,11 +1,11 @@
 package net.fortressgames.fortressapi.listeners;
 
-import net.fortressgames.fortressapi.events.event.InventoryCloseFortressEvent;
 import net.fortressgames.fortressapi.gui.LoopTask;
 import net.fortressgames.fortressapi.players.FortressPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -18,8 +18,8 @@ public class CloseInventoryListener implements Listener {
 	public static HashMap<Player, ItemStack> offhand = new HashMap<>();
 
 	@EventHandler
-	public void close(InventoryCloseFortressEvent e) {
-		FortressPlayer player = e.getPlayer();
+	public void close(InventoryCloseEvent e) {
+		FortressPlayer player = FortressPlayer.getPlayer((Player) e.getPlayer());
 
 		if(player == null) return;
 

@@ -1,8 +1,6 @@
 package net.fortressgames.fortressapi;
 
 import lombok.Getter;
-import net.fortressgames.fortressapi.eventlisteners.CloseInventoryEventListener;
-import net.fortressgames.fortressapi.eventlisteners.InventoryClickEventListener;
 import net.fortressgames.fortressapi.listeners.CloseInventoryListener;
 import net.fortressgames.fortressapi.listeners.InventoryClickListener;
 import net.fortressgames.fortressapi.players.FortressPlayerModule;
@@ -36,9 +34,6 @@ public class FortressAPI extends JavaPlugin {
 
 		this.getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
 		this.getServer().getPluginManager().registerEvents(new CloseInventoryListener(), this);
-
-		this.getServer().getPluginManager().registerEvents(new InventoryClickEventListener(), this);
-		this.getServer().getPluginManager().registerEvents(new CloseInventoryEventListener(), this);
 
 		// Trigger join event again for online players this will only trigger if the server has been reloaded
 		// and players are still online. This is so the user.class data is triggers for online players after reload.

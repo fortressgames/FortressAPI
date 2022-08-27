@@ -3,13 +3,13 @@ package net.fortressgames.fortressapi.gui;
 import lombok.Getter;
 import lombok.Setter;
 import net.fortressgames.fortressapi.FortressAPI;
-import net.fortressgames.fortressapi.events.event.InventoryClickFortressEvent;
 import net.fortressgames.fortressapi.listeners.CloseInventoryListener;
 import net.fortressgames.fortressapi.players.FortressPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -40,7 +40,7 @@ public abstract class InventoryMenu {
 	@Getter private final Inventory inventory;
 	@Getter private final Player player;
 
-	@Getter private final HashMap<Integer, Consumer<InventoryClickFortressEvent>> slots = new HashMap<>();
+	@Getter private final HashMap<Integer, Consumer<InventoryClickEvent>> slots = new HashMap<>();
 
 	@Getter private final HashMap<Integer, LoopTask> loopTasks = new HashMap<>();
 
@@ -93,7 +93,7 @@ public abstract class InventoryMenu {
 	 * @param slot inventory slot
 	 * @param event click action
 	 */
-	public void setItem(ItemStack itemStack, int slot, Consumer<InventoryClickFortressEvent> event, boolean locked) {
+	public void setItem(ItemStack itemStack, int slot, Consumer<InventoryClickEvent> event, boolean locked) {
 		inventory.setItem(slot, itemStack);
 
 		if(slots.containsKey(slot)) {
@@ -114,7 +114,7 @@ public abstract class InventoryMenu {
 	 * @param slot inventory slot
 	 * @param event click action
 	 */
-	public void setItem(ItemStack itemStack, int slot, Consumer<InventoryClickFortressEvent> event) {
+	public void setItem(ItemStack itemStack, int slot, Consumer<InventoryClickEvent> event) {
 		inventory.setItem(slot, itemStack);
 
 		if(slots.containsKey(slot)) {
@@ -141,7 +141,7 @@ public abstract class InventoryMenu {
 	 * @param slot inventory slot
 	 * @param event InventoryClickEvent
 	 */
-	public void updateItem(ItemStack itemStack, int slot, Consumer<InventoryClickFortressEvent> event) {
+	public void updateItem(ItemStack itemStack, int slot, Consumer<InventoryClickEvent> event) {
 		inventory.setItem(slot, itemStack);
 
 		if(slots.containsKey(slot)) {
