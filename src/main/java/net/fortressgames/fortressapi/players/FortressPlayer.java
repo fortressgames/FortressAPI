@@ -1,10 +1,7 @@
 package net.fortressgames.fortressapi.players;
 
 import lombok.Getter;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Sound;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
@@ -56,5 +53,17 @@ public class FortressPlayer extends CustomPlayer {
 	}
 	public void stopSound(Sound sound) {
 		player.stopSound(sound);
+	}
+	public void spawnParticle(Particle particle, double x, double y, double z, int count) {
+		player.spawnParticle(particle, x, y, z, count);
+	}
+	public void spawnParticle(Particle particle, double x, double y, double z, int count, double offX, double offY, double offZ) {
+		player.spawnParticle(particle, x, y, z, count, offX, offY, offZ);
+	}
+	public void spawnParticle(Particle particle, double x, double y, double z, int count, double offX, double offY, double offZ, double speed) {
+		player.spawnParticle(particle, x, y, z, count, offX, offY, offZ, speed);
+	}
+	public void spawnParticle(Particle particle, double x, double y, double z, int count, double speed) {
+		player.spawnParticle(particle, x, y, z, count, 0, 0, 0, speed);
 	}
 }
