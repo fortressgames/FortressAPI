@@ -9,6 +9,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class FortressPlayerModule implements Listener {
 
@@ -32,6 +33,26 @@ public class FortressPlayerModule implements Listener {
 	}
 	public List<Player> getOnlinePlayers() {
 		return new ArrayList<>(users.keySet());
+	}
+
+	public Player getPlayer(String name) {
+		Player target = null;
+
+		for(Player pp : users.keySet()) {
+			if(pp.getName().equals(name)) target = pp;
+		}
+
+		return target;
+	}
+
+	public Player getPlayer(UUID name) {
+		Player target = null;
+
+		for(Player pp : users.keySet()) {
+			if(pp.getUniqueId().equals(name)) target = pp;
+		}
+
+		return target;
 	}
 
 	@EventHandler
