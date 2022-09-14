@@ -304,8 +304,6 @@ public class MojangAPIUtils {
 						uuidString = uuidString.substring(0, 8) + "-" + uuidString.substring(8, 12) + "-" + uuidString.substring(12, 16) + "-" +
 								uuidString.substring(16, 20) + "-" + uuidString.substring(20);
 
-						System.out.println(uuidString);
-
 						String name = (String) jsonObject.get("name");
 
 						boolean legacy = false;
