@@ -2,7 +2,6 @@ package net.fortressgames.fortressapi.listeners;
 
 import net.fortressgames.fortressapi.gui.LoopTask;
 import net.fortressgames.fortressapi.players.FortressPlayer;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -14,16 +13,16 @@ import java.util.List;
 
 public class CloseInventoryListener implements Listener {
 
-	public static List<Player> singleSub = new ArrayList<>();
-	public static HashMap<Player, ItemStack> offhand = new HashMap<>();
+	public static List<FortressPlayer> singleSub = new ArrayList<>();
+	public static HashMap<FortressPlayer, ItemStack> offhand = new HashMap<>();
 
 	@EventHandler
 	public void close(InventoryCloseEvent e) {
-		FortressPlayer player = FortressPlayer.getPlayer((Player) e.getPlayer());
+		FortressPlayer player = FortressPlayer.getPlayer(e.getPlayer());
 
 		if(player == null) return;
 
-		if(player.getOpenMenu() != null && !singleSub.contains(player.getPlayer())) {
+		if(player.getOpenMenu() != null && !singleSub.contains(player)) {
 
 			if(player.getOpenMenu().getInventoryName().equalsIgnoreCase(player.getOpenInventory().getTitle())) {
 				for(LoopTask loopTask : player.getOpenMenu().getLoopTasks().values()) {
@@ -34,11 +33,11 @@ public class CloseInventoryListener implements Listener {
 			}
 		}
 
-		singleSub.remove(player.getPlayer());
+		singleSub.remove(player);
 
-		if(offhand.containsKey(player.getPlayer())) {
-			player.setItemInOffHand(offhand.get(player.getPlayer()));
-			offhand.remove(player.getPlayer());
+		if(offhand.containsKey(player)) {
+			player.setItemInOffHand(offhand.get(player));
+			offhand.remove(player);
 		}
 	}
 }

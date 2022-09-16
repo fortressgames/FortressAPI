@@ -8,7 +8,6 @@ import net.fortressgames.fortressapi.players.FortressPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
@@ -38,27 +37,27 @@ public abstract class InventoryMenu {
 	@Setter @Getter private boolean canMove = false;
 
 	@Getter private final Inventory inventory;
-	@Getter private final Player player;
+	@Getter private final FortressPlayer fortressPlayer;
 
 	@Getter private final HashMap<Integer, Consumer<InventoryClickEvent>> slots = new HashMap<>();
 
 	@Getter private final HashMap<Integer, LoopTask> loopTasks = new HashMap<>();
 
-	public InventoryMenu(Player player, InventoryRows rows, String inventoryName) {
-		this.inventory = Bukkit.createInventory(player, rows.getSize(), inventoryName);
-		this.player = player;
+	public InventoryMenu(FortressPlayer fortressPlayer, InventoryRows rows, String inventoryName) {
+		this.inventory = Bukkit.createInventory(fortressPlayer.getPlayer(), rows.getSize(), inventoryName);
+		this.fortressPlayer = fortressPlayer;
 		this.inventoryName = inventoryName;
 	}
 
-	public InventoryMenu(Player player, InventoryRows rows, String image, String title) {
-		this.inventory = Bukkit.createInventory(player, rows.getSize(), "§f\uF808" + image + "\uF80B\uF80A\uF809\uF808\uF801\uF80A\uF809§f\uF808§f" + title + "\uF80A\uF808\uF803\uF80B\uF80A\uF809\uF808\uF806");
-		this.player = player;
+	public InventoryMenu(FortressPlayer fortressPlayer, InventoryRows rows, String image, String title) {
+		this.inventory = Bukkit.createInventory(fortressPlayer.getPlayer(), rows.getSize(), "§f\uF808" + image + "\uF80B\uF80A\uF809\uF808\uF801\uF80A\uF809§f\uF808§f" + title + "\uF80A\uF808\uF803\uF80B\uF80A\uF809\uF808\uF806");
+		this.fortressPlayer = fortressPlayer;
 		this.inventoryName = "§f\uF808" + image + "\uF80B\uF80A\uF809\uF808\uF801\uF80A\uF809§f\uF808§f" + title + "\uF80A\uF808\uF803\uF80B\uF80A\uF809\uF808\uF806";
 	}
 
-	public InventoryMenu(Player player, InventoryType type, String inventoryName) {
-		this.inventory = Bukkit.createInventory(player, type, inventoryName);
-		this.player = player;
+	public InventoryMenu(FortressPlayer fortressPlayer, InventoryType type, String inventoryName) {
+		this.inventory = Bukkit.createInventory(fortressPlayer.getPlayer(), type, inventoryName);
+		this.fortressPlayer = fortressPlayer;
 		this.inventoryName = inventoryName;
 	}
 
@@ -155,18 +154,16 @@ public abstract class InventoryMenu {
 	 * Open the inventory
 	 */
 	public void openInventory() {
-		FortressPlayer user = FortressPlayer.getPlayer(player);
-
-		if(user.getOpenMenu() != null) {
-			user.setOpenMenu(this);
-			CloseInventoryListener.singleSub.add(player);
+		if(fortressPlayer.getOpenMenu() != null) {
+			fortressPlayer.setOpenMenu(this);
+			CloseInventoryListener.singleSub.add(fortressPlayer);
 
 		} else {
-			user.setOpenMenu(this);
+			fortressPlayer.setOpenMenu(this);
 		}
 
-		this.player.openInventory(this.inventory);
-		CloseInventoryListener.offhand.put(player, player.getInventory().getItemInOffHand());
+		this.fortressPlayer.openInventory(this.inventory);
+		CloseInventoryListener.offhand.put(fortressPlayer, fortressPlayer.getItemInOffHand());
 	}
 
 	/**

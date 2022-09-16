@@ -2,7 +2,9 @@ package net.fortressgames.fortressapi.players;
 
 import lombok.Getter;
 import org.bukkit.*;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -20,9 +22,18 @@ public class FortressPlayer extends CustomPlayer {
 	public static FortressPlayer getPlayer(Player player) {
 		return FortressPlayerModule.getInstance().getUser(player);
 	}
+	public static FortressPlayer getPlayer(HumanEntity humanEntity) {
+		if(humanEntity instanceof Player) {
+			return FortressPlayerModule.getInstance().getUser((Player)humanEntity);
+		}
+		return null;
+	}
 
 	public InventoryView getOpenInventory() {
 		return player.getOpenInventory();
+	}
+	public void openInventory(Inventory inventory) {
+		player.openInventory(inventory);
 	}
 	public GameMode getGameMode() {
 		return player.getGameMode();
@@ -32,6 +43,9 @@ public class FortressPlayer extends CustomPlayer {
 	}
 	public void sendMessage(String message) {
 		player.sendMessage(message);
+	}
+	public ItemStack getItemInOffHand() {
+		return player.getInventory().getItemInOffHand();
 	}
 	public World getWorld() {
 		return player.getWorld();
