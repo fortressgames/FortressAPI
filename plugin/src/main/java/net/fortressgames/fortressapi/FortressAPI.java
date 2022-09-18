@@ -5,22 +5,26 @@ import net.fortressgames.fortressapi.listeners.CloseInventoryListener;
 import net.fortressgames.fortressapi.listeners.InventoryClickListener;
 import net.fortressgames.fortressapi.players.FortressPlayerModule;
 import net.fortressgames.fortressapi.utils.ConsoleMessage;
+import net.fortressgames.fortressapi.version.FortressAPI1_19_1_R1;
+import net.fortressgames.fortressapi.version.FortressAPI1_19_R1;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FortressAPI extends JavaPlugin {
 
 	@Getter private static FortressAPI instance;
-
-	/**
-	 * Called when plugin first loads by spigot and is called before onEnable
-	 */
-	@Override
-	public void onLoad() {
-
-	}
+	@Getter private VersionHandler versionHandler;
+	private final List<VersionHandler> versionHandlers = new ArrayList<VersionHandler>() {
+		{
+			add(new FortressAPI1_19_1_R1());
+			add(new FortressAPI1_19_R1());
+		}
+	};
 
 	/**
 	 * Called when the plugin is first loaded by Spigot
@@ -28,6 +32,11 @@ public class FortressAPI extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		instance = this;
+
+		switch(getServer().getClass().getPackage().getName().split("\\.")[3]) {
+			case "v1_19_1_R1" -> versionHandler = versionHandlers.get(0);
+			case "v1_19_R1" -> versionHandler = versionHandlers.get(1);
+		}
 
 		// Register events
 		this.getServer().getPluginManager().registerEvents(FortressPlayerModule.getInstance(), this);

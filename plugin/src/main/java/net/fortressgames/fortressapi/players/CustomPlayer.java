@@ -2,6 +2,7 @@ package net.fortressgames.fortressapi.players;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.fortressgames.fortressapi.FortressAPI;
 import net.fortressgames.fortressapi.PacketConnection;
 import net.fortressgames.fortressapi.gui.InventoryMenu;
 import net.minecraft.network.chat.IChatBaseComponent;
@@ -36,7 +37,7 @@ public class CustomPlayer {
 		PacketConnection connection = PacketConnection.getConnection(player);
 
 		IChatBaseComponent iChatBaseComponent = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + ChatColor.translateAlternateColorCodes('&', message) + "\"}");
-		ClientboundSystemChatPacket packetPlayOutChat = new ClientboundSystemChatPacket(iChatBaseComponent, 2);
+		ClientboundSystemChatPacket packetPlayOutChat = FortressAPI.getInstance().getVersionHandler().actionBarGetClientboundSystemChatPacket(iChatBaseComponent);
 		connection.sendPacket(packetPlayOutChat);
 	}
 
@@ -51,7 +52,7 @@ public class CustomPlayer {
 		PacketConnection connection = PacketConnection.getConnection(player);
 
 		IChatBaseComponent iChatBaseComponent = IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + text + "\",\"extra\":" + "[{\"text\":\"" + clickableText + "\",\"clickEvent\":{\"action\":\"run_command\",\"value\":" + "\"/" + runCommand + "\"}}]}");
-		ClientboundSystemChatPacket packet = new ClientboundSystemChatPacket(iChatBaseComponent, 1);
+		ClientboundSystemChatPacket packet = FortressAPI.getInstance().getVersionHandler().clickMessageGetClientboundSystemChatPacket(iChatBaseComponent);
 		connection.sendPacket(packet);
 	}
 

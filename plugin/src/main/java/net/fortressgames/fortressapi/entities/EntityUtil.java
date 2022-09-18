@@ -1,6 +1,7 @@
 package net.fortressgames.fortressapi.entities;
 
 import lombok.Getter;
+import net.fortressgames.fortressapi.FortressAPI;
 import net.minecraft.network.chat.IChatBaseComponent;
 import net.minecraft.network.syncher.DataWatcher;
 import net.minecraft.world.entity.Entity;
@@ -30,7 +31,7 @@ public class EntityUtil {
 	}
 
 	protected String getName() {
-		return entity.cr();
+		return FortressAPI.getInstance().getVersionHandler().getName(entity);
 	}
 
 	protected void setLocation(double x, double y, double z, float yaw, float pitch) {
@@ -61,8 +62,8 @@ public class EntityUtil {
 		entity.b(i, flag);
 	}
 
-	protected final List<Entity> getPassengers() {
-		return entity.cJ();
+	protected List<Entity> getPassengers() {
+		return FortressAPI.getInstance().getVersionHandler().getPassengers(entity);
 	}
 
 	public enum EnumItemSlot {

@@ -35,17 +35,32 @@ public class FortressPlayer extends CustomPlayer {
 	public void openInventory(Inventory inventory) {
 		player.openInventory(inventory);
 	}
+	public void closeInventory() {
+		player.closeInventory();
+	}
+
 	public GameMode getGameMode() {
 		return player.getGameMode();
 	}
+	public void setGameMode(GameMode gameMode) {
+		player.setGameMode(gameMode);
+	}
+
 	public void setItemInOffHand(ItemStack itemInOffHand) {
 		player.getInventory().setItemInOffHand(itemInOffHand);
 	}
-	public void sendMessage(String message) {
-		player.sendMessage(message);
-	}
 	public ItemStack getItemInOffHand() {
 		return player.getInventory().getItemInOffHand();
+	}
+	public void setItemInMainHand(ItemStack itemInMainHand) {
+		player.getInventory().setItemInMainHand(itemInMainHand);
+	}
+	public ItemStack getItemInMainHand() {
+		return player.getInventory().getItemInMainHand();
+	}
+
+	public void sendMessage(String message) {
+		player.sendMessage(message);
 	}
 	public World getWorld() {
 		return player.getWorld();
@@ -56,6 +71,7 @@ public class FortressPlayer extends CustomPlayer {
 	public void sendTitle(String mainText, String subText, int fadeIn, int stay, int fadeOut) {
 		player.sendTitle(mainText, subText, fadeIn, stay, fadeOut);
 	}
+
 	public void addPotionEffect(PotionEffectType potionEffectType, int duration, int amplifier, boolean particles) {
 		player.addPotionEffect(new PotionEffect(potionEffectType, duration, amplifier, false, particles));
 	}
@@ -65,9 +81,11 @@ public class FortressPlayer extends CustomPlayer {
 	public void removePotionEffect(PotionEffectType potionEffectType) {
 		player.removePotionEffect(potionEffectType);
 	}
+
 	public void stopSound(Sound sound) {
 		player.stopSound(sound);
 	}
+
 	public void spawnParticle(Particle particle, double x, double y, double z, int count) {
 		player.spawnParticle(particle, x, y, z, count);
 	}
