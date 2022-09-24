@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.fortressgames</groupId>
-    <artifactId>FortressAPI</artifactId>
+    <artifactId>fortressapi</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>FortressAPI</name>
@@ -50,4 +50,11 @@
             </plugin>
         </plugins>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/fortressgames/fortressapi</url>
+        </repository>
+    </distributionManagement>
 </project>
