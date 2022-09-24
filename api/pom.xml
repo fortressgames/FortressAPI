@@ -23,7 +23,7 @@
         </dependency>
     </dependencies>
 
-    <!--<build>
+    <build>
         <directory>../target</directory>
         <resources>
             <resource>
@@ -35,5 +35,5 @@
                 </includes>
             </resource>
         </resources>
-    </build>-->
+    </build>
 </project>

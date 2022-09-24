@@ -64,7 +64,7 @@
         </dependency>
     </dependencies>
 
-    <!--<build>
+    <build>
         <directory>../target</directory>
         <finalName>FortressAPI</finalName>
         <resources>
@@ -77,7 +77,7 @@
                 </includes>
             </resource>
         </resources>
-       &lt;!&ndash; <plugins>
+        <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -86,6 +86,6 @@
                     <target>16</target>
                 </configuration>
             </plugin>
-        </plugins>&ndash;&gt;
-    </build>-->
+        </plugins>
+    </build>
 </project>
