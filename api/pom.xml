@@ -8,6 +8,7 @@
         <groupId>net.fortressgames</groupId>
         <artifactId>FortressAPI</artifactId>
         <version>1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>FortressAPI-api</artifactId>
@@ -21,18 +22,4 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
-
-    <build>
-        <directory>../target</directory>
-        <resources>
-            <resource>
-                <targetPath>.</targetPath>
-                <filtering>true</filtering>
-                <directory>src/main/resources</directory>
-                <includes>
-                    <include>plugin.yml</include>
-                </includes>
-            </resource>
-        </resources>
-    </build>
 </project>
