@@ -21,4 +21,18 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <directory>../target</directory>
+        <resources>
+            <resource>
+                <targetPath>.</targetPath>
+                <filtering>true</filtering>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>plugin.yml</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
 </project>
