@@ -8,5 +8,3 @@ Allows for:
 - custom armorstand, wither skeleton entitys
 - simple scoreboard manager
 - custom player class with more methods
-
-[![](https://jitpack.io/v/fortressgames/FortressAPI.svg)](https://jitpack.io/#fortressgames/FortressAPI)
