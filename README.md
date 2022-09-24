@@ -8,3 +8,11 @@ Allows for:
 - custom armorstand, wither skeleton entitys
 - simple scoreboard manager
 - custom player class with more methods
+```
+<dependency>
+    <groupId>net.fortressgames</groupId>
+    <artifactId>fortressapi</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <scope>provided</scope>
+<dependency>
+```
