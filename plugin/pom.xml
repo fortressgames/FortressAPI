@@ -8,10 +8,9 @@
         <groupId>net.fortressgames</groupId>
         <artifactId>FortressAPI</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <!--<relativePath>../pom.xml</relativePath>-->
     </parent>
 
-    <artifactId>FortressAPI-plugin</artifactId>
+    <artifactId>plugin</artifactId>
     <name>plugin</name>
     <packaging>jar</packaging>
 
