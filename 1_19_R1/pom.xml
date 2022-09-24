@@ -11,6 +11,7 @@
     </parent>
 
     <artifactId>FortressAPI-1_19_R1</artifactId>
+    <name>1_19_R1</name>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -29,7 +30,7 @@
         </dependency>
     </dependencies>
 
-    <build>
+    <!--<build>
         <directory>../target</directory>
         <resources>
             <resource>
@@ -41,5 +42,5 @@
                 </includes>
             </resource>
         </resources>
-    </build>
+    </build>-->
 </project>

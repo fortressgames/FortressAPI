@@ -8,10 +8,10 @@
         <groupId>net.fortressgames</groupId>
         <artifactId>FortressAPI</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>FortressAPI-api</artifactId>
+    <name>api</name>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -23,7 +23,7 @@
         </dependency>
     </dependencies>
 
-    <build>
+    <!--<build>
         <directory>../target</directory>
         <resources>
             <resource>
@@ -35,5 +35,5 @@
                 </includes>
             </resource>
         </resources>
-    </build>
+    </build>-->
 </project>
