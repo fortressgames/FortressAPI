@@ -65,7 +65,7 @@
     </dependencies>
 
     <build>
-        <directory>../target</directory>
+        <!--<directory>../target</directory>
         <finalName>FortressAPI</finalName>
         <resources>
             <resource>
@@ -76,7 +76,7 @@
                     <include>plugin.yml</include>
                 </includes>
             </resource>
-        </resources>
+        </resources>-->
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
