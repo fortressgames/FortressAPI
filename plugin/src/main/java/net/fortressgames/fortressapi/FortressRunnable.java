@@ -3,7 +3,6 @@ package net.fortressgames.fortressapi;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitTask;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.TimeUnit;
 
@@ -11,8 +10,7 @@ public abstract class FortressRunnable implements Runnable {
 
 	private BukkitTask task;
 
-	@NotNull
-	private BukkitTask setupTask(@NotNull BukkitTask task) {
+	private BukkitTask setupTask(BukkitTask task) {
 		this.task = task;
 		return task;
 	}
@@ -43,26 +41,22 @@ public abstract class FortressRunnable implements Runnable {
 		}
 	}
 
-	@NotNull
-	public synchronized BukkitTask runTaskTimer(@NotNull Plugin plugin, long delay, TimeUnit timeUnit, long period) throws IllegalArgumentException, IllegalStateException {
+	public synchronized BukkitTask runTaskTimer(Plugin plugin, long delay, TimeUnit timeUnit, long period) throws IllegalArgumentException, IllegalStateException {
 		checkNotYetScheduled();
 		return setupTask(Bukkit.getScheduler().runTaskTimer(plugin, this, delay, returnPeriod(timeUnit, period)));
 	}
 
-	@NotNull
-	public synchronized BukkitTask runTaskTimer(@NotNull Plugin plugin, TimeUnit timeUnit, long period) throws IllegalArgumentException, IllegalStateException {
+	public synchronized BukkitTask runTaskTimer(Plugin plugin, TimeUnit timeUnit, long period) throws IllegalArgumentException, IllegalStateException {
 		checkNotYetScheduled();
 		return setupTask(Bukkit.getScheduler().runTaskTimer(plugin, this, 0, returnPeriod(timeUnit, period)));
 	}
 
-	@NotNull
-	public synchronized BukkitTask runTaskTimerAsynchronously(@NotNull Plugin plugin, long delay, TimeUnit timeUnit, long period) throws IllegalArgumentException, IllegalStateException {
+	public synchronized BukkitTask runTaskTimerAsynchronously(Plugin plugin, long delay, TimeUnit timeUnit, long period) throws IllegalArgumentException, IllegalStateException {
 		checkNotYetScheduled();
 		return setupTask(Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, this, delay, returnPeriod(timeUnit, period)));
 	}
 
-	@NotNull
-	public synchronized BukkitTask runTaskTimerAsynchronously(@NotNull Plugin plugin, TimeUnit timeUnit, long period) throws IllegalArgumentException, IllegalStateException {
+	public synchronized BukkitTask runTaskTimerAsynchronously(Plugin plugin, TimeUnit timeUnit, long period) throws IllegalArgumentException, IllegalStateException {
 		checkNotYetScheduled();
 		return setupTask(Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, this, 0, returnPeriod(timeUnit, period)));
 	}
