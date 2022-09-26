@@ -11,7 +11,6 @@
     </parent>
 
     <artifactId>api</artifactId>
-    <name>api</name>
     <packaging>jar</packaging>
 
     <dependencies>
