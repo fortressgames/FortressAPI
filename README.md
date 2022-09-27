@@ -10,11 +10,11 @@ Open source Spigot API Plugin for Minecraft `1.19 - 1.19.2`
 
 ```xml
 <dependency>
-            <groupId>net.fortressgames</groupId>
-            <artifactId>plugin</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
+    <groupId>net.fortressgames</groupId>
+    <artifactId>plugin</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <scope>provided</scope>
+</dependency>
 ```
 
 ## GUI Example:
