@@ -1,16 +1,6 @@
 # FortressAPI
 Open source Spigot API Plugin for Minecraft `1.19 - 1.19.2`
 
-## Maven dependency
-```xml
-<dependency>
-    <groupId>net.fortressgames</groupId>
-    <artifactId>fortressapi</artifactId>
-    <version>2.0</version>
-    <scope>provided</scope>
-</dependency>
-```
-
 ### Contains:
 - Custom command base
 - Custom inventory system
