@@ -2,5 +2,11 @@ package net.fortressgames.fortressapi.players;
 
 import lombok.Getter;
 
-public record FortressPlayerHolder(@Getter FortressPlayer fortressPlayer) {
+public class FortressPlayerHolder {
+
+	@Getter private final FortressPlayer fortressPlayer;
+
+	public FortressPlayerHolder(FortressPlayer fortressPlayer) {
+		this.fortressPlayer = fortressPlayer;
+	}
 }
