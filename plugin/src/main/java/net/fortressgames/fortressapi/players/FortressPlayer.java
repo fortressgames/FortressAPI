@@ -46,6 +46,19 @@ public class FortressPlayer extends CustomPlayer {
 		player.setGameMode(gameMode);
 	}
 
+	public void setHealth(double health) {
+		player.setHealth(health);
+	}
+	public double getHealth() {
+		return player.getHealth();
+	}
+	public void setFoodLevel(int food) {
+		player.setFoodLevel(food);
+	}
+	public int getFoodLevel() {
+		return player.getFoodLevel();
+	}
+
 	public void setItemInOffHand(ItemStack itemInOffHand) {
 		player.getInventory().setItemInOffHand(itemInOffHand);
 	}
