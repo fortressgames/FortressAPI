@@ -12,7 +12,7 @@ Open source Spigot API Plugin for Minecraft `1.19 - 1.19.2`
 <dependency>
     <groupId>net.fortressgames</groupId>
     <artifactId>plugin</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.1-SNAPSHOT</version>
     <scope>provided</scope>
 </dependency>
 ```
