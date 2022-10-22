@@ -52,12 +52,16 @@ public class PlayerModule implements Listener {
 		return target;
 	}
 
+	public void addPlayer(Player player) {
+		this.users.put(player, new CustomPlayer(player));
+	}
+
 	@EventHandler
 	public void playerJoin(PlayerJoinEvent e) {
 		Player player = e.getPlayer();
 		e.setJoinMessage("");
 
-		this.users.put(player, new CustomPlayer(player));
+		addPlayer(player);
 	}
 
 	@EventHandler

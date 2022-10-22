@@ -46,10 +46,9 @@ public class FortressAPI extends JavaPlugin {
 		this.getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
 		this.getServer().getPluginManager().registerEvents(new CloseInventoryListener(), this);
 
-		// Trigger join event again for online players this will only trigger if the server has been reloaded
-		// and players are still online. This is so the user.class data is triggers for online players after reload.
-		for(Player player : Bukkit.getOnlinePlayers()) {
-			Bukkit.getPluginManager().callEvent(new PlayerJoinEvent(player, ""));
+		// Adds players after reload
+		for(Player pp : Bukkit.getOnlinePlayers()) {
+			PlayerModule.getInstance().addPlayer(pp);
 		}
 
 		new PlayerMoveTask().runTaskTimer(this, TimeUnit.MILLISECONDS, 5);
