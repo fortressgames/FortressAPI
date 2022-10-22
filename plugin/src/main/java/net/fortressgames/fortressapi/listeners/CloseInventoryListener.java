@@ -1,7 +1,9 @@
 package net.fortressgames.fortressapi.listeners;
 
 import net.fortressgames.fortressapi.gui.LoopTask;
-import net.fortressgames.fortressapi.players.FortressPlayer;
+import net.fortressgames.fortressapi.players.CustomPlayer;
+import net.fortressgames.fortressapi.players.PlayerModule;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -13,30 +15,31 @@ import java.util.List;
 
 public class CloseInventoryListener implements Listener {
 
-	public static List<FortressPlayer> singleSub = new ArrayList<>();
-	public static HashMap<FortressPlayer, ItemStack> offhand = new HashMap<>();
+	public static List<Player> singleSub = new ArrayList<>();
+	public static HashMap<Player, ItemStack> offhand = new HashMap<>();
 
 	@EventHandler
 	public void close(InventoryCloseEvent e) {
-		FortressPlayer player = FortressPlayer.getPlayer(e.getPlayer());
+		Player player = (Player) e.getPlayer();
+		CustomPlayer customPlayer = PlayerModule.getInstance().getPlayer((Player) e.getPlayer());
 
-		if(player == null) return;
+		if(customPlayer == null) return;
 
-		if(player.getOpenMenu() != null && !singleSub.contains(player)) {
+		if(customPlayer.getOpenMenu() != null && !singleSub.contains(player)) {
 
-			if(player.getOpenMenu().getInventoryName().equalsIgnoreCase(player.getOpenInventory().getTitle())) {
-				for(LoopTask loopTask : player.getOpenMenu().getLoopTasks().values()) {
+			if(customPlayer.getOpenMenu().getInventoryName().equalsIgnoreCase(player.getOpenInventory().getTitle())) {
+				for(LoopTask loopTask : customPlayer.getOpenMenu().getLoopTasks().values()) {
 					loopTask.cancel();
 				}
 
-				player.setOpenMenu(null);
+				customPlayer.setOpenMenu(null);
 			}
 		}
 
 		singleSub.remove(player);
 
 		if(offhand.containsKey(player)) {
-			player.setItemInOffHand(offhand.get(player));
+			player.getInventory().setItemInOffHand(offhand.get(player));
 			offhand.remove(player);
 		}
 	}

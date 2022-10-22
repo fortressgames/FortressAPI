@@ -11,26 +11,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-public class FortressPlayerModule implements Listener {
+public class PlayerModule implements Listener {
 
-	private static FortressPlayerModule instance;
-	private final HashMap<Player, FortressPlayer> users = new HashMap<>();
+	private static PlayerModule instance;
+	private final HashMap<Player, CustomPlayer> users = new HashMap<>();
 
-	public static FortressPlayerModule getInstance() {
+	public static PlayerModule getInstance() {
 		if(instance == null) {
-			instance = new FortressPlayerModule();
+			instance = new PlayerModule();
 		}
 
 		return instance;
 	}
 
-	public FortressPlayer getUser(Player player) {
+	public CustomPlayer getPlayer(Player player) {
 		return this.users.get(player);
 	}
 
-	public List<FortressPlayer> getAllUsers() {
-		return new ArrayList<>(users.values());
-	}
 	public List<Player> getOnlinePlayers() {
 		return new ArrayList<>(users.keySet());
 	}
@@ -60,7 +57,7 @@ public class FortressPlayerModule implements Listener {
 		Player player = e.getPlayer();
 		e.setJoinMessage("");
 
-		this.users.put(player, new FortressPlayer(player));
+		this.users.put(player, new CustomPlayer(player));
 	}
 
 	@EventHandler
