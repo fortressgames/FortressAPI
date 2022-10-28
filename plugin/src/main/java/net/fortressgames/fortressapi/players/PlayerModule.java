@@ -1,5 +1,7 @@
 package net.fortressgames.fortressapi.players;
 
+import net.fortressgames.fortressapi.events.PlayerMoveTaskEvent;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -59,16 +61,14 @@ public class PlayerModule implements Listener {
 	@EventHandler
 	public void playerJoin(PlayerJoinEvent e) {
 		Player player = e.getPlayer();
-		e.setJoinMessage("");
 
 		addPlayer(player);
+
+		Bukkit.getPluginManager().callEvent(new PlayerMoveTaskEvent(player));
 	}
 
 	@EventHandler
 	public void playerQuit(PlayerQuitEvent e) {
-		Player player = e.getPlayer();
-		e.setQuitMessage("");
-
-		this.users.remove(player);
+		this.users.remove(e.getPlayer());
 	}
 }
