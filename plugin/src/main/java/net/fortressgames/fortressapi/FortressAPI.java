@@ -10,7 +10,6 @@ import net.fortressgames.fortressapi.version.FortressAPI1_19_1_R1;
 import net.fortressgames.fortressapi.version.FortressAPI1_19_R1;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -21,7 +20,7 @@ public class FortressAPI extends JavaPlugin {
 
 	@Getter private static FortressAPI instance;
 	@Getter private VersionHandler versionHandler;
-	private final List<VersionHandler> versionHandlers = new ArrayList<VersionHandler>() {
+	private final List<VersionHandler> versionHandlers = new ArrayList<>() {
 		{
 			add(new FortressAPI1_19_1_R1());
 			add(new FortressAPI1_19_R1());
