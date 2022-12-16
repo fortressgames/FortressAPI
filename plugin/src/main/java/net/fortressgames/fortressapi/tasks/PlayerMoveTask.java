@@ -9,7 +9,6 @@ public class PlayerMoveTask extends FortressRunnable {
 
 	@Override
 	public void run() {
-
 		PlayerModule.getInstance().getOnlinePlayers().forEach(player -> Bukkit.getPluginManager().callEvent(new PlayerMoveTaskEvent(player)));
 	}
 }

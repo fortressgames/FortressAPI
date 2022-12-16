@@ -1,17 +1,22 @@
 package net.fortressgames.fortressapi;
 
 import lombok.Getter;
+import net.fortressgames.fortressapi.commands.CommandModule;
+import net.fortressgames.fortressapi.commands.cmd.SplineCommand;
 import net.fortressgames.fortressapi.listeners.CloseInventoryListener;
 import net.fortressgames.fortressapi.listeners.InventoryClickListener;
 import net.fortressgames.fortressapi.players.PlayerModule;
+import net.fortressgames.fortressapi.splines.SplineModule;
 import net.fortressgames.fortressapi.tasks.PlayerMoveTask;
 import net.fortressgames.fortressapi.utils.ConsoleMessage;
 import net.fortressgames.fortressapi.version.FortressAPI1_19_1_R1;
 import net.fortressgames.fortressapi.version.FortressAPI1_19_R1;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -26,6 +31,28 @@ public class FortressAPI extends JavaPlugin {
 			add(new FortressAPI1_19_R1());
 		}
 	};
+
+	/**
+	 * Called when plugin first loads by spigot and is called before onEnable
+	 */
+	@Override
+	public void onLoad() {
+		// Create Default folder
+		if(!getDataFolder().exists()) {
+			getDataFolder().mkdir();
+		}
+
+		// Create spline folder
+		if(!new File(getDataFolder() + "/Splines").exists()) {
+			new File(getDataFolder() + "/Splines").mkdir();
+		}
+
+		// Load splines
+		for(File file : new File(getDataFolder() + "/Splines").listFiles()) {
+			SplineModule.getInstance().load(file, file.getName().replace(".csv", ""),
+					new Location(Bukkit.getWorlds().get(0), 0, 0, 0));
+		}
+	}
 
 	/**
 	 * Called when the plugin is first loaded by Spigot
@@ -49,6 +76,8 @@ public class FortressAPI extends JavaPlugin {
 		for(Player pp : Bukkit.getOnlinePlayers()) {
 			PlayerModule.getInstance().addPlayer(pp);
 		}
+
+		CommandModule.registerCommand(new SplineCommand());
 
 		new PlayerMoveTask().runTaskTimer(this, TimeUnit.MILLISECONDS, 5);
 
