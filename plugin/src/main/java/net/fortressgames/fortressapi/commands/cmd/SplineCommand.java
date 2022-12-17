@@ -3,8 +3,8 @@ package net.fortressgames.fortressapi.commands.cmd;
 import net.fortressgames.fortressapi.Lang;
 import net.fortressgames.fortressapi.commands.CommandBase;
 import net.fortressgames.fortressapi.entities.CustomArmorstand;
-import net.fortressgames.fortressapi.splines.Point;
 import net.fortressgames.fortressapi.splines.SplineModule;
+import net.fortressgames.fortressapi.splines.SplineNode;
 import net.fortressgames.fortressapi.utils.HexColor;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -55,7 +55,7 @@ public class SplineCommand extends CommandBase {
 					return;
 				}
 
-				List<Point> points = SplineModule.getInstance().getSpline(args[1]);
+				List<SplineNode> points = SplineModule.getInstance().getSpline(args[1]);
 				int baseSpawnValue = 50;
 
 				// Check if player has input a value
@@ -77,12 +77,12 @@ public class SplineCommand extends CommandBase {
 						continue;
 					}
 
-					CustomArmorstand armorstand = new CustomArmorstand(points.get(i).location())
-							.setCustomName("SPLINE: " + i + " / " + args[3])
-							.setCustomNameVisible(true)
+					CustomArmorstand armorstand = new CustomArmorstand(points.get(i).getLocation())
+							.setCustomName("SPLINE: " + i + " / " + args[1])
+							//.setCustomNameVisible(true)
 							.setBasePlate(false)
-							.setHelmet(new ItemStack(Material.WHITE_CONCRETE))
-							.setHeadPose(new EulerAngle(points.get(i).pitch(), 0, points.get(i).roll()));
+							.setHelmet(new ItemStack(Material.OBSERVER))
+							.setHeadPose(points.get(i).getHeadPos());
 
 					armorstand.spawn(player);
 					armorstands.get(player).add(armorstand);

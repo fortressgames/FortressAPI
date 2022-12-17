@@ -2,10 +2,8 @@ package net.fortressgames.fortressapi.splines;
 
 import lombok.SneakyThrows;
 import org.apache.commons.io.FileUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.util.Vector;
 
 import java.io.File;
 import java.nio.charset.Charset;
@@ -16,7 +14,7 @@ import java.util.List;
 public class SplineModule {
 
 	private static SplineModule instance;
-	private final HashMap<String, List<Point>> splines = new HashMap<>();
+	private final HashMap<String, List<SplineNode>> splines = new HashMap<>();
 
 	public static SplineModule getInstance() {
 		if (instance == null) {
@@ -29,52 +27,34 @@ public class SplineModule {
 		return new ArrayList<>(splines.keySet());
 	}
 
-	public List<Point> getSpline(String spline) {
+	public List<SplineNode> getSpline(String spline) {
 		return this.splines.get(spline);
 	}
 
 	//TODO
 	// offSetLocation does nothing
-	@SneakyThrows
-	public void load(File file, String splineName, Location offSetLocation) {
-		List<Point> points = new ArrayList<>();
+	// default world only, each spline needs their world
 
+	@SneakyThrows
+	public void load(File file, String splineName, Location offSetLocation, World world) {
+		List<NoLimits2Node> nl2Nodes = new ArrayList<>();
+
+		// Convert all values into NL2 classes
 		for(String rawPoint : FileUtils.readLines(file, Charset.defaultCharset())) {
-			points.add(loadPoint(rawPoint, offSetLocation, points.size()));
+			if(rawPoint.contains("FrontX")) continue;
+
+			nl2Nodes.add(new NoLimits2Node(world).convert(rawPoint));
 		}
 
-		splines.put(splineName, points);
-	}
+		List<SplineNode> splineNodes = new ArrayList<>();
 
-	private Point loadPoint(String rawPoint, Location offSetLocation, int currentPoint) {
-		//TODO
-		// This needs to be updated so each spline has its own world link.
-		// Right now splines only load in the default world
-		World defaultWorld = Bukkit.getWorlds().get(0);
-		String[] split = rawPoint.replace("\t", ",").split(",");
+		nl2Nodes.forEach(noLimits2Node -> splineNodes.add(new SplineNode(
+				noLimits2Node.getLocation(),
+				noLimits2Node.getPitch(),
+				noLimits2Node.getRoll(),
+				splineNodes.size()
+		)));
 
-		Vector vector = new Vector(Double.parseDouble(split[4]), Double.parseDouble(split[5]), Double.parseDouble(split[6]));
-		Location vectorRoll = new Vector(Double.parseDouble(split[7]), Double.parseDouble(split[8]), Double.parseDouble(split[9])).toLocation(defaultWorld);
-		Location vectorPitch = new Vector(Double.parseDouble(split[4]), Double.parseDouble(split[5]), Double.parseDouble(split[6])).toLocation(defaultWorld);
-
-		double xzLength = Math.sqrt(vectorRoll.getX()*vectorRoll.getX() + vectorRoll.getZ()*vectorRoll.getZ());
-		double roll = Math.atan2(xzLength, vectorRoll.getY()) - Math.PI / 2;
-
-		double pitch = Math.atan2(xzLength, vectorPitch.getY()) - Math.PI / 2;
-
-		//TODO
-		// Speed is default to 0 splines have no information on speed
-		return new Point(
-				new Location(
-						Bukkit.getWorlds().get(0),
-						offSetLocation.getX() + Double.parseDouble(split[1]),
-						offSetLocation.getY() + Double.parseDouble(split[2]),
-						offSetLocation.getZ() + Double.parseDouble(split[3])
-				).setDirection(vector),
-
-				pitch,
-				roll,
-				currentPoint,
-				0);
+		splines.put(splineName, splineNodes);
 	}
 }

@@ -50,7 +50,7 @@ public class FortressAPI extends JavaPlugin {
 		// Load splines
 		for(File file : new File(getDataFolder() + "/Splines").listFiles()) {
 			SplineModule.getInstance().load(file, file.getName().replace(".csv", ""),
-					new Location(Bukkit.getWorlds().get(0), 0, 0, 0));
+					new Location(Bukkit.getWorlds().get(0), 0, 0, 0), Bukkit.getWorlds().get(0));
 		}
 	}
 
