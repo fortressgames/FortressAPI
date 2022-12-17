@@ -49,8 +49,8 @@ public class FortressAPI extends JavaPlugin {
 
 		// Load splines
 		for(File file : new File(getDataFolder() + "/Splines").listFiles()) {
-			SplineModule.getInstance().load(file, file.getName().replace(".csv", ""),
-					new Location(Bukkit.getWorlds().get(0), 0, 0, 0), Bukkit.getWorlds().get(0));
+			//TODO default world only, each spline needs their world
+			SplineModule.getInstance().load(file, file.getName().replace(".csv", ""), Bukkit.getWorlds().get(0));
 		}
 	}
 

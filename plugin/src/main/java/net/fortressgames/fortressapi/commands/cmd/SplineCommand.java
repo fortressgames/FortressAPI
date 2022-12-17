@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.EulerAngle;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -79,7 +80,7 @@ public class SplineCommand extends CommandBase {
 
 					CustomArmorstand armorstand = new CustomArmorstand(points.get(i).getLocation())
 							.setCustomName("SPLINE: " + i + " / " + args[1])
-							//.setCustomNameVisible(true)
+							.setCustomNameVisible(true)
 							.setBasePlate(false)
 							.setHelmet(new ItemStack(Material.OBSERVER))
 							.setHeadPose(points.get(i).getHeadPos());
@@ -107,5 +108,18 @@ public class SplineCommand extends CommandBase {
 				return;
 			}
 		}
+	}
+
+	@Override
+	public List<String> tabComplete(CommandSender sender, String alias, String[] args) {
+		if(args.length == 1) {
+			return Arrays.asList("view", "unview");
+		}
+
+		if(args.length == 2) {
+			return SplineModule.getInstance().getAll();
+		}
+
+		return super.tabComplete(sender, alias, args);
 	}
 }

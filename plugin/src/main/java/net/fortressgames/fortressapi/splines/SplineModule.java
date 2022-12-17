@@ -31,12 +31,8 @@ public class SplineModule {
 		return this.splines.get(spline);
 	}
 
-	//TODO
-	// offSetLocation does nothing
-	// default world only, each spline needs their world
-
 	@SneakyThrows
-	public void load(File file, String splineName, Location offSetLocation, World world) {
+	public void load(File file, String splineName, World world) {
 		List<NoLimits2Node> nl2Nodes = new ArrayList<>();
 
 		// Convert all values into NL2 classes
