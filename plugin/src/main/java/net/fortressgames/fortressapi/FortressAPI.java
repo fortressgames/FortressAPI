@@ -46,12 +46,6 @@ public class FortressAPI extends JavaPlugin {
 		if(!new File(getDataFolder() + "/Splines").exists()) {
 			new File(getDataFolder() + "/Splines").mkdir();
 		}
-
-		// Load splines
-		for(File file : new File(getDataFolder() + "/Splines").listFiles()) {
-			//TODO default world only, each spline needs their world
-			SplineModule.getInstance().load(file, file.getName().replace(".csv", ""), Bukkit.getWorlds().get(0));
-		}
 	}
 
 	/**
@@ -64,6 +58,12 @@ public class FortressAPI extends JavaPlugin {
 		switch(getServer().getClass().getPackage().getName().split("\\.")[3]) {
 			case "v1_19_1_R1" -> versionHandler = versionHandlers.get(0);
 			case "v1_19_R1" -> versionHandler = versionHandlers.get(1);
+		}
+
+		// Load splines
+		for(File file : new File(getDataFolder() + "/Splines").listFiles()) {
+			//TODO default world only, each spline needs their world
+			SplineModule.getInstance().load(file, file.getName().replace(".csv", ""), Bukkit.getWorlds().get(0));
 		}
 
 		// Register events
