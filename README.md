@@ -1,6 +1,9 @@
 # FortressAPI
 Open source Spigot API Plugin for Minecraft `1.19 - 1.19.2`
 
+## Permissios:
+- fortressapi.command.spline
+
 ### Contains:
 - Custom command base
 - Custom inventory system
