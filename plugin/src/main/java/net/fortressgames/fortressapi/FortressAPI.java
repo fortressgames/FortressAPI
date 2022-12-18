@@ -12,7 +12,6 @@ import net.fortressgames.fortressapi.utils.ConsoleMessage;
 import net.fortressgames.fortressapi.version.FortressAPI1_19_1_R1;
 import net.fortressgames.fortressapi.version.FortressAPI1_19_R1;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -55,9 +54,9 @@ public class FortressAPI extends JavaPlugin {
 	public void onEnable() {
 		instance = this;
 
-		switch(getServer().getClass().getPackage().getName().split("\\.")[3]) {
-			case "v1_19_1_R1" -> versionHandler = versionHandlers.get(0);
-			case "v1_19_R1" -> versionHandler = versionHandlers.get(1);
+		switch(Bukkit.getVersion().split("\\(MC: ")[1].replace(")", "")) {
+			case "1.19.2", "1.19.1" -> versionHandler = versionHandlers.get(0);
+			case "1.19" -> versionHandler = versionHandlers.get(1);
 		}
 
 		// Load splines

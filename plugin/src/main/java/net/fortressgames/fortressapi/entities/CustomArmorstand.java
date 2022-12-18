@@ -339,4 +339,8 @@ public class CustomArmorstand extends EntityUtil {
 
 		return this;
 	}
+
+	public EntityArmorStand breakInto() {
+		return entityArmorStand;
+	}
 }
