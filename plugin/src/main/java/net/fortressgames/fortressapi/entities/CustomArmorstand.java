@@ -139,24 +139,21 @@ public class CustomArmorstand extends EntityUtil {
 		// fill mount packet with the trackerentry and ridingOn's passengers and a = ridingOn
 		int[] bArray = new int[getPassengers().size() + 1];
 
-		for (int i = 0; i < getPassengers().size(); ++i)
-		{
+		for(int i = 0; i < getPassengers().size(); ++i) {
 			bArray[i] = getPassengers().get(i).ae();
 		}
 
 		bArray[getPassengers().size()] = ((CraftPlayer) rider).getHandle().ae();
 
-		try
-		{
+		try {
 			Field aField = onTopMountPacket.getClass().getDeclaredField("a");
 			aField.setAccessible(true);
 			aField.setInt(onTopMountPacket, getId());
 			Field bField = onTopMountPacket.getClass().getDeclaredField("b");
 			bField.setAccessible(true);
 			bField.set(onTopMountPacket, bArray);
-		}
-		catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e)
-		{
+
+		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
 			e.printStackTrace();
 		}
 
