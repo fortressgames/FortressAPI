@@ -1,6 +1,7 @@
 package net.fortressgames.fortressapi;
 
 import lombok.Getter;
+import lombok.SneakyThrows;
 import net.fortressgames.fortressapi.commands.CommandModule;
 import net.fortressgames.fortressapi.commands.cmd.SplineCommand;
 import net.fortressgames.fortressapi.listeners.CloseInventoryListener;
@@ -12,6 +13,7 @@ import net.fortressgames.fortressapi.utils.ConsoleMessage;
 import net.fortressgames.fortressapi.version.FortressAPI1_19_1_R1;
 import net.fortressgames.fortressapi.version.FortressAPI1_19_R1;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -35,11 +37,14 @@ public class FortressAPI extends JavaPlugin {
 	 * Called when plugin first loads by spigot and is called before onEnable
 	 */
 	@Override
+	@SneakyThrows
 	public void onLoad() {
 		// Create Default folder
 		if(!getDataFolder().exists()) {
 			getDataFolder().mkdir();
 		}
+
+		saveConfig();
 
 		// Create spline folder
 		if(!new File(getDataFolder() + "/Splines").exists()) {
@@ -61,8 +66,10 @@ public class FortressAPI extends JavaPlugin {
 
 		// Load splines
 		for(File file : new File(getDataFolder() + "/Splines").listFiles()) {
-			//TODO default world only, each spline needs their world
-			SplineModule.getInstance().load(file, file.getName().replace(".csv", ""), Bukkit.getWorlds().get(0));
+			String name = file.getName().replace(".csv", "");
+			if(getConfig().contains(name)) {
+				SplineModule.getInstance().load(file, name, Bukkit.getWorld(getConfig().getString(name)));
+			}
 		}
 
 		// Register events
