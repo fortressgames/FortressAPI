@@ -26,7 +26,7 @@ import java.util.function.Consumer;
 public class CustomNPC {
 
 	private final EntityPlayer entityPlayer;
-	private final Location location;
+	@Getter private final Location location;
 
 	@Getter	private final int id;
 	@Setter	@Getter	private Consumer<Player> click;
