@@ -25,7 +25,7 @@ import java.util.function.Consumer;
 
 public class CustomNPC {
 
-	private final EntityPlayer entityPlayer;
+	@Getter private final EntityPlayer entityPlayer;
 	@Getter private final Location location;
 
 	@Getter	private final int id;
