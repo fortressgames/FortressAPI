@@ -1,9 +1,11 @@
 package net.fortressgames.fortressapi;
 
+import com.comphenix.protocol.ProtocolLibrary;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.fortressgames.fortressapi.commands.CommandModule;
 import net.fortressgames.fortressapi.commands.cmd.SplineCommand;
+import net.fortressgames.fortressapi.listeners.ClickEntityListener;
 import net.fortressgames.fortressapi.listeners.CloseInventoryListener;
 import net.fortressgames.fortressapi.listeners.InventoryClickListener;
 import net.fortressgames.fortressapi.players.PlayerModule;
@@ -13,14 +15,16 @@ import net.fortressgames.fortressapi.utils.ConsoleMessage;
 import net.fortressgames.fortressapi.version.FortressAPI1_19_1_R1;
 import net.fortressgames.fortressapi.version.FortressAPI1_19_R1;
 import org.bukkit.Bukkit;
-import org.bukkit.World;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 
 public class FortressAPI extends JavaPlugin {
 
@@ -32,6 +36,16 @@ public class FortressAPI extends JavaPlugin {
 			add(new FortressAPI1_19_R1());
 		}
 	};
+
+	public static final HashMap<Entity, Consumer<Entity>> click = new HashMap<>();
+
+	public static void addClickEntity(Entity entity, Consumer<Entity> consumer) {
+		click.put(entity, consumer);
+	}
+
+	public static void removeClickEntity(Entity entity) {
+		click.remove(entity);
+	}
 
 	/**
 	 * Called when plugin first loads by spigot and is called before onEnable
@@ -63,6 +77,10 @@ public class FortressAPI extends JavaPlugin {
 			case "1.19.2", "1.19.1" -> versionHandler = versionHandlers.get(0);
 			case "1.19" -> versionHandler = versionHandlers.get(1);
 		}
+
+		ClickEntityListener entityListener = new ClickEntityListener();
+		this.getServer().getPluginManager().registerEvents(entityListener, this);
+		ProtocolLibrary.getProtocolManager().addPacketListener(entityListener);
 
 		// Load splines
 		for(File file : new File(getDataFolder() + "/Splines").listFiles()) {
