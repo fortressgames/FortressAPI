@@ -3,6 +3,7 @@ package net.fortressgames.fortressapi.entities;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import lombok.Getter;
+import lombok.Setter;
 import net.fortressgames.fortressapi.FortressAPI;
 import net.fortressgames.fortressapi.PacketConnection;
 import net.minecraft.network.protocol.game.*;
@@ -28,11 +29,38 @@ public class CustomNPC {
 	private final Location location;
 
 	@Getter	private final int id;
-	@Getter	private final Consumer<Player> click;
+	@Setter	@Getter	private Consumer<Player> click;
 
 	public CustomNPC(Location location, String displayName, SkinCatch skinCatch, Consumer<Player> click) {
 		this.location = location;
 		this.click = click;
+
+		MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
+		WorldServer worldServer = ((CraftWorld) location.getWorld()).getHandle();
+
+		GameProfile profile = new GameProfile(UUID.randomUUID(), ChatColor.translateAlternateColorCodes('&', displayName));
+
+		profile.getProperties().put("textures", new Property("textures", skinCatch.getValue(), skinCatch.getSignature()));
+
+		this.entityPlayer = new EntityPlayer(server, worldServer, profile, null);
+
+		this.entityPlayer.a(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
+
+		//0x40 : Hat
+		//0x20 right leg
+		//0x10 left leg
+		//0x08 left arm
+		//0x04 right arm
+		//0x02 body
+		//0x01 cape
+		byte b = 0x01 | 0x02 | 0x04 | 0x08 | 0x10 | 0x20 | 0x40;
+		this.entityPlayer.ai().b(new DataWatcherObject<>(17, DataWatcherRegistry.a), b);
+
+		this.id = entityPlayer.ae();
+	}
+
+	public CustomNPC(Location location, String displayName, SkinCatch skinCatch) {
+		this.location = location;
 
 		MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
 		WorldServer worldServer = ((CraftWorld) location.getWorld()).getHandle();
