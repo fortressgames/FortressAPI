@@ -93,6 +93,36 @@ public class CustomNPC {
 		this.id = entityPlayer.ae();
 	}
 
+	public void update(Player player) {
+		PacketConnection connection = PacketConnection.getConnection(player);
+
+		connection.sendPacket(new PacketPlayOutEntityMetadata(getId(), entityPlayer.ai(), true));
+
+		updateArmor(player);
+	}
+
+	public void updateArmor(Player player) {
+		PacketConnection connection = PacketConnection.getConnection(player);
+
+		connection.sendPacket(new PacketPlayOutEntityEquipment(getId(),
+				new ArrayList<>(Collections.singleton(new Pair<>(EntityUtil.EnumItemSlot.HEAD.NMS(), entityPlayer.c(EntityUtil.EnumItemSlot.HEAD.NMS()))))));
+
+		connection.sendPacket(new PacketPlayOutEntityEquipment(getId(),
+				new ArrayList<>(Collections.singleton(new Pair<>(EntityUtil.EnumItemSlot.CHEST.NMS(), entityPlayer.c(EntityUtil.EnumItemSlot.CHEST.NMS()))))));
+
+		connection.sendPacket(new PacketPlayOutEntityEquipment(getId(),
+				new ArrayList<>(Collections.singleton(new Pair<>(EntityUtil.EnumItemSlot.LEGS.NMS(), entityPlayer.c(EntityUtil.EnumItemSlot.LEGS.NMS()))))));
+
+		connection.sendPacket(new PacketPlayOutEntityEquipment(getId(),
+				new ArrayList<>(Collections.singleton(new Pair<>(EntityUtil.EnumItemSlot.FEET.NMS(), entityPlayer.c(EntityUtil.EnumItemSlot.FEET.NMS()))))));
+
+		connection.sendPacket(new PacketPlayOutEntityEquipment(getId(),
+				new ArrayList<>(Collections.singleton(new Pair<>(EntityUtil.EnumItemSlot.MAIN_HAND.NMS(), entityPlayer.c(EntityUtil.EnumItemSlot.MAIN_HAND.NMS()))))));
+
+		connection.sendPacket(new PacketPlayOutEntityEquipment(getId(),
+				new ArrayList<>(Collections.singleton(new Pair<>(EntityUtil.EnumItemSlot.OFF_HAND.NMS(), entityPlayer.c(EntityUtil.EnumItemSlot.OFF_HAND.NMS()))))));
+	}
+
 	public void spawn(Player player) {
 		PacketConnection connection = PacketConnection.getConnection(player);
 

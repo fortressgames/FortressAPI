@@ -75,9 +75,6 @@ public class CustomArmorstand extends EntityUtil {
 
 		connection.sendPacket(new PacketPlayOutEntityMetadata(getId(), getDataWatcher(), true));
 
-		connection.sendPacket(new PacketPlayOutEntityEquipment(getId(),
-				new ArrayList<>(Collections.singleton(new Pair<>(EnumItemSlot.HEAD.NMS(), entityArmorStand.c(EnumItemSlot.HEAD.NMS()))))));
-
 		updateArmor(player);
 		updateName(player);
 		sendLocationChangeArmorstand(player);
