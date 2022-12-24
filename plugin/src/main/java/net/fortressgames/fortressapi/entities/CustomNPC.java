@@ -2,6 +2,7 @@ package net.fortressgames.fortressapi.entities;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
+import com.mojang.datafixers.util.Pair;
 import lombok.Getter;
 import lombok.Setter;
 import net.fortressgames.fortressapi.FortressAPI;
@@ -17,9 +18,13 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_19_R1.CraftServer;
 import org.bukkit.craftbukkit.v1_19_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_19_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.UUID;
 import java.util.function.Consumer;
 
@@ -27,6 +32,8 @@ public class CustomNPC {
 
 	@Getter private final EntityPlayer entityPlayer;
 	@Getter private final Location location;
+
+	@Getter private boolean glowing;
 
 	@Getter	private final int id;
 	@Setter	@Getter	private Consumer<Player> click;
@@ -123,5 +130,33 @@ public class CustomNPC {
 			connection.sendPacket(new PacketPlayOutEntityHeadRotation(this.entityPlayer, (byte)(location.getYaw() * 256.0f / 360.0f)));
 			connection.sendPacket(packetPlayOutEntityLook);
 		}
+	}
+
+	public void setEquipment(ItemStack helmet, ItemStack chestplate, ItemStack leggings, ItemStack boots, ItemStack mainHand, ItemStack offHand, Player player) {
+		PacketConnection connection = PacketConnection.getConnection(player);
+
+		connection.sendPacket(new PacketPlayOutEntityEquipment(this.id,
+				new ArrayList<>(Collections.singleton(new Pair<>(EntityUtil.EnumItemSlot.MAIN_HAND.NMS(), CraftItemStack.asNMSCopy(mainHand))))));
+
+		connection.sendPacket(new PacketPlayOutEntityEquipment(this.id,
+				new ArrayList<>(Collections.singleton(new Pair<>(EntityUtil.EnumItemSlot.OFF_HAND.NMS(), CraftItemStack.asNMSCopy(offHand))))));
+		connection.sendPacket(new PacketPlayOutEntityEquipment(this.id, new ArrayList<>(
+				Collections.singleton(new Pair<>(EntityUtil.EnumItemSlot.FEET.NMS(), CraftItemStack.asNMSCopy(boots)))
+		)));
+		connection.sendPacket(new PacketPlayOutEntityEquipment(this.id,
+				new ArrayList<>(Collections.singleton(new Pair<>(EntityUtil.EnumItemSlot.LEGS.NMS(), CraftItemStack.asNMSCopy(leggings))))));
+
+		connection.sendPacket(new PacketPlayOutEntityEquipment(this.id,
+				new ArrayList<>(Collections.singleton(new Pair<>(EntityUtil.EnumItemSlot.CHEST.NMS(), CraftItemStack.asNMSCopy(chestplate))))));
+
+		connection.sendPacket(new PacketPlayOutEntityEquipment(this.id,
+				new ArrayList<>(Collections.singleton(new Pair<>(EntityUtil.EnumItemSlot.HEAD.NMS(), CraftItemStack.asNMSCopy(helmet))))));
+	}
+
+	public CustomNPC setGlowing(boolean glowing) {
+		entityPlayer.b(6, glowing);
+		this.glowing = glowing;
+
+		return this;
 	}
 }
