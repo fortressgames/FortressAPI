@@ -14,8 +14,8 @@ import net.fortressgames.fortressapi.tasks.PlayerMoveTask;
 import net.fortressgames.fortressapi.utils.ConsoleMessage;
 import net.fortressgames.fortressapi.version.FortressAPI1_19_1_R1;
 import net.fortressgames.fortressapi.version.FortressAPI1_19_R1;
+import net.minecraft.world.entity.Entity;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 
 public class FortressAPI extends JavaPlugin {
 
@@ -37,9 +37,9 @@ public class FortressAPI extends JavaPlugin {
 		}
 	};
 
-	public static final HashMap<Entity, Consumer<Entity>> click = new HashMap<>();
+	public static final HashMap<Entity, BiConsumer<Player, Entity>> click = new HashMap<>();
 
-	public static void addClickEntity(Entity entity, Consumer<Entity> consumer) {
+	public static void addClickEntity(Entity entity, BiConsumer<Player, Entity> consumer) {
 		click.put(entity, consumer);
 	}
 

@@ -7,10 +7,14 @@ import com.comphenix.protocol.events.PacketEvent;
 import lombok.SneakyThrows;
 import net.fortressgames.fortressapi.FortressAPI;
 import net.minecraft.network.protocol.game.PacketPlayInUseEntity;
-import org.bukkit.entity.Entity;
+import net.minecraft.world.entity.Entity;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
 import java.lang.reflect.Field;
+import java.util.Map;
+import java.util.function.BiConsumer;
 
 public class ClickEntityListener extends PacketAdapter implements Listener {
 
@@ -23,9 +27,9 @@ public class ClickEntityListener extends PacketAdapter implements Listener {
 	public void onPacketReceiving(PacketEvent e) {
 		PacketContainer packet = e.getPacket();
 
-		for(Entity entity : FortressAPI.click.keySet()) {
+		for(Map.Entry<Entity, BiConsumer<Player, Entity>> map : FortressAPI.click.entrySet()) {
 
-			if(entity.getEntityId() == packet.getIntegers().read(0)) {
+			if(map.getKey().getBukkitEntity().getEntityId() == packet.getIntegers().read(0)) {
 				PacketPlayInUseEntity useEntity = (PacketPlayInUseEntity) packet.getHandle();
 
 				Field valueB = useEntity.getClass().getDeclaredField("b");
@@ -35,7 +39,9 @@ public class ClickEntityListener extends PacketAdapter implements Listener {
 				try {
 					objectValueB.getClass().getDeclaredField("a");
 					//LEFT CLICK
-					FortressAPI.click.get(entity).accept(entity);
+					Bukkit.getScheduler().runTask(FortressAPI.getInstance(), () -> {
+						FortressAPI.click.get(map.getKey()).accept(e.getPlayer(), map.getKey());
+					});
 
 				} catch (NoSuchFieldException ee) {
 					//RIGHT CLICK
