@@ -9,7 +9,13 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
-public record CustomPlayer(Player player) {
+public class CustomPlayer {
+
+	private final Player player;
+
+	public CustomPlayer(Player player) {
+		this.player = player;
+	}
 
 	/***
 	 * Send a message to the action bar.
