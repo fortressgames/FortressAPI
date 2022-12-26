@@ -1,7 +1,7 @@
 package net.fortressgames.fortressapi.listeners;
 
+import net.fortressgames.fortressapi.gui.InventoryMenu;
 import net.fortressgames.fortressapi.gui.LoopTask;
-import net.fortressgames.fortressapi.players.CustomPlayer;
 import net.fortressgames.fortressapi.players.PlayerModule;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,18 +21,16 @@ public class CloseInventoryListener implements Listener {
 	@EventHandler
 	public void close(InventoryCloseEvent e) {
 		Player player = (Player) e.getPlayer();
-		CustomPlayer customPlayer = PlayerModule.getInstance().getPlayer((Player) e.getPlayer());
+		InventoryMenu inventoryMenu = PlayerModule.getInstance().getOpenMenu().get(player);
 
-		if(customPlayer == null) return;
+		if(inventoryMenu != null && !singleSub.contains(player)) {
 
-		if(customPlayer.getOpenMenu() != null && !singleSub.contains(player)) {
-
-			if(customPlayer.getOpenMenu().getInventoryName().equalsIgnoreCase(player.getOpenInventory().getTitle())) {
-				for(LoopTask loopTask : customPlayer.getOpenMenu().getLoopTasks().values()) {
+			if(inventoryMenu.getInventoryName().equalsIgnoreCase(player.getOpenInventory().getTitle())) {
+				for(LoopTask loopTask : inventoryMenu.getLoopTasks().values()) {
 					loopTask.cancel();
 				}
 
-				customPlayer.setOpenMenu(null);
+				PlayerModule.getInstance().getOpenMenu().replace(player, null);
 			}
 		}
 

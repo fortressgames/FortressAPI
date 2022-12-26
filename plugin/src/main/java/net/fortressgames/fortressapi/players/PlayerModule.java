@@ -1,6 +1,8 @@
 package net.fortressgames.fortressapi.players;
 
+import lombok.Getter;
 import net.fortressgames.fortressapi.events.PlayerMoveTaskEvent;
+import net.fortressgames.fortressapi.gui.InventoryMenu;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,7 +18,7 @@ import java.util.UUID;
 public class PlayerModule implements Listener {
 
 	private static PlayerModule instance;
-	private final HashMap<Player, CustomPlayer> users = new HashMap<>();
+	@Getter private final HashMap<Player, InventoryMenu> openMenu = new HashMap<>();
 
 	public static PlayerModule getInstance() {
 		if(instance == null) {
@@ -26,18 +28,14 @@ public class PlayerModule implements Listener {
 		return instance;
 	}
 
-	public CustomPlayer getPlayer(Player player) {
-		return this.users.get(player);
-	}
-
 	public List<Player> getOnlinePlayers() {
-		return new ArrayList<>(users.keySet());
+		return new ArrayList<>(openMenu.keySet());
 	}
 
 	public Player getPlayer(String name) {
 		Player target = null;
 
-		for(Player pp : users.keySet()) {
+		for(Player pp : openMenu.keySet()) {
 			if(pp.getName().equals(name)) target = pp;
 		}
 
@@ -47,7 +45,7 @@ public class PlayerModule implements Listener {
 	public Player getPlayer(UUID name) {
 		Player target = null;
 
-		for(Player pp : users.keySet()) {
+		for(Player pp : openMenu.keySet()) {
 			if(pp.getUniqueId().equals(name)) target = pp;
 		}
 
@@ -55,7 +53,7 @@ public class PlayerModule implements Listener {
 	}
 
 	public void addPlayer(Player player) {
-		this.users.put(player, new CustomPlayer(player));
+		this.openMenu.put(player, null);
 	}
 
 	@EventHandler
@@ -69,6 +67,6 @@ public class PlayerModule implements Listener {
 
 	@EventHandler
 	public void playerQuit(PlayerQuitEvent e) {
-		this.users.remove(e.getPlayer());
+		this.openMenu.remove(e.getPlayer());
 	}
 }

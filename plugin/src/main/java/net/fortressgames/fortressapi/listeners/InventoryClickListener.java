@@ -1,7 +1,6 @@
 package net.fortressgames.fortressapi.listeners;
 
 import net.fortressgames.fortressapi.gui.InventoryMenu;
-import net.fortressgames.fortressapi.players.CustomPlayer;
 import net.fortressgames.fortressapi.players.PlayerModule;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -16,13 +15,13 @@ public class InventoryClickListener implements Listener {
 	@EventHandler
 	public void click(InventoryClickEvent e) {
 		Player player = (Player) e.getWhoClicked();
-		CustomPlayer customPlayer = PlayerModule.getInstance().getPlayer((Player) e.getWhoClicked());
+		InventoryMenu inventoryMenu = PlayerModule.getInstance().getOpenMenu().get(player);
 
 		if(player.getOpenInventory().getType() != InventoryType.CHEST) {
 			if(player.getGameMode() == GameMode.CREATIVE) return;
 		}
 
-		if(customPlayer.getOpenMenu() != null) {
+		if(inventoryMenu != null) {
 
 			if(e.getClickedInventory() == null) return;
 
@@ -30,8 +29,6 @@ public class InventoryClickListener implements Listener {
 				e.setCancelled(true);
 				return;
 			}
-
-			InventoryMenu inventoryMenu = customPlayer.getOpenMenu();
 
 			if(inventoryMenu.isCanMove()) {
 

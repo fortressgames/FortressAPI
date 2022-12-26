@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import net.fortressgames.fortressapi.FortressAPI;
 import net.fortressgames.fortressapi.listeners.CloseInventoryListener;
-import net.fortressgames.fortressapi.players.CustomPlayer;
 import net.fortressgames.fortressapi.players.PlayerModule;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -156,14 +155,12 @@ public abstract class InventoryMenu {
 	 * Open the inventory
 	 */
 	public void openInventory() {
-		CustomPlayer customPlayer = PlayerModule.getInstance().getPlayer(player);
+		InventoryMenu inventoryMenu = PlayerModule.getInstance().getOpenMenu().get(player);
 
-		if(customPlayer.getOpenMenu() != null) {
-			customPlayer.setOpenMenu(this);
+		PlayerModule.getInstance().getOpenMenu().replace(player, this);
+
+		if(inventoryMenu != null) {
 			CloseInventoryListener.singleSub.add(player);
-
-		} else {
-			customPlayer.setOpenMenu(this);
 		}
 
 		player.openInventory(this.inventory);
