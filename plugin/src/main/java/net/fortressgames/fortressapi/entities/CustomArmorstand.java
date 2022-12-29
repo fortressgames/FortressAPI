@@ -24,7 +24,7 @@ import java.util.Collections;
 
 public class CustomArmorstand extends EntityUtil {
 
-	private final EntityArmorStand entityArmorStand;
+	@Getter private final EntityArmorStand entityArmorStand;
 	@Getter private Location location;
 
 	@Getter private ItemStack itemInMainHand = new ItemStack(Material.AIR);
@@ -66,6 +66,40 @@ public class CustomArmorstand extends EntityUtil {
 		this.rightArmPose = new EulerAngle(entityArmorStand.cj.b(), entityArmorStand.cj.c(), entityArmorStand.cj.d());
 		this.leftLegPose = new EulerAngle(entityArmorStand.ck.b(), entityArmorStand.ck.c(), entityArmorStand.ck.d());
 		this.rightLegPose = new EulerAngle(entityArmorStand.cl.b(), entityArmorStand.cl.c(), entityArmorStand.cl.d());
+
+		setSilent(true);
+	}
+
+	public CustomArmorstand(CustomArmorstand customArmorstand) {
+		super(new EntityArmorStand(EntityTypes.d, ((CraftWorld)customArmorstand.getLocation().getWorld()).getHandle()));
+
+		entityArmorStand = ((EntityArmorStand) getEntity());
+
+		this.location = customArmorstand.getLocation();
+		this.setPositionRotation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
+
+		this.itemInMainHand = customArmorstand.getItemInMainHand();
+		this.itemInOffHand = customArmorstand.getItemInOffHand();
+		this.helmet = customArmorstand.getHelmet();
+		this.chestplate = customArmorstand.getChestplate();
+		this.leggings = customArmorstand.getLeggings();
+		this.boots = customArmorstand.getBoots();
+
+		this.headPose = customArmorstand.getHeadPose();
+		this.bodyPose = customArmorstand.getBodyPose();
+		this.leftArmPose = customArmorstand.getLeftArmPose();
+		this.rightArmPose = customArmorstand.getRightArmPose();
+		this.leftLegPose = customArmorstand.getLeftLegPose();
+		this.rightLegPose = customArmorstand.getRightLegPose();
+
+		this.basePlate = customArmorstand.isBasePlate();
+		this.invisible = customArmorstand.isInvisible();
+		this.arms = customArmorstand.isArms();
+		this.small = customArmorstand.isSmall();
+		this.glowing = customArmorstand.isGlowing();
+		this.customNameVisible = customArmorstand.isCustomNameVisible();
+
+		this.customName = customArmorstand.getCustomName();
 
 		setSilent(true);
 	}
@@ -332,9 +366,5 @@ public class CustomArmorstand extends EntityUtil {
 		this.customName = customName;
 
 		return this;
-	}
-
-	public EntityArmorStand breakInto() {
-		return entityArmorStand;
 	}
 }
