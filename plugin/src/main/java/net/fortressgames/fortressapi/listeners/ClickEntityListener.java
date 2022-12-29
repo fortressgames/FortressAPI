@@ -26,36 +26,63 @@ public class ClickEntityListener extends PacketAdapter implements Listener {
 
 	private final List<Player> delay = new ArrayList<>();
 
-	@SneakyThrows
 	@Override
 	public void onPacketReceiving(PacketEvent e) {
 		PacketContainer packet = e.getPacket();
 
 		if(delay.contains(e.getPlayer())) return;
+
 		delay.add(e.getPlayer());
-		Bukkit.getScheduler().runTask(FortressAPI.getInstance(), () -> {
-			delay.remove(e.getPlayer());
-		});
+		Bukkit.getScheduler().runTask(FortressAPI.getInstance(), () -> delay.remove(e.getPlayer()));
 
-		for(Map.Entry<Entity, BiConsumer<Player, Entity>> map : ClickEvent.click.entrySet()) {
+		// loop all click entities
+		for(Map.Entry<Entity, BiConsumer<Player, Entity>> map : ClickEvent.LeftClick.entrySet()) {
 
+			// check if the ID matches current click entity on event
 			if(map.getKey().getBukkitEntity().getEntityId() == packet.getIntegers().read(0)) {
-				PacketPlayInUseEntity useEntity = (PacketPlayInUseEntity) packet.getHandle();
+				PacketPlayInUseEntity packetPlayInUseEntity = (PacketPlayInUseEntity) packet.getHandle();
 
-				Field valueB = useEntity.getClass().getDeclaredField("b");
-				valueB.setAccessible(true);
-				Object objectValueB = valueB.get(useEntity);
+				Object objectValue = getFieldObject(packetPlayInUseEntity);
 
 				try {
-					objectValueB.getClass().getDeclaredField("a");
+					objectValue.getClass().getDeclaredField("a");
 					//LEFT CLICK
 
-					Bukkit.getScheduler().runTask(FortressAPI.getInstance(), () -> ClickEvent.click.get(map.getKey()).accept(e.getPlayer(), map.getKey()));
+					Bukkit.getScheduler().runTask(FortressAPI.getInstance(), () -> ClickEvent.LeftClick.get(map.getKey()).accept(e.getPlayer(), map.getKey()));
 
 				} catch (NoSuchFieldException ee) {
 					//RIGHT CLICK
 				}
 			}
 		}
+
+		// loop all click entities
+		for(Map.Entry<Entity, BiConsumer<Player, Entity>> map : ClickEvent.rightClick.entrySet()) {
+
+			// check if the ID matches current click entity on event
+			if(map.getKey().getBukkitEntity().getEntityId() == packet.getIntegers().read(0)) {
+				PacketPlayInUseEntity packetPlayInUseEntity = (PacketPlayInUseEntity) packet.getHandle();
+
+				Object objectValue = getFieldObject(packetPlayInUseEntity);
+
+				try {
+					objectValue.getClass().getDeclaredField("a");
+					//LEFT CLICK
+
+				} catch (NoSuchFieldException ee) {
+					//RIGHT CLICK
+
+					Bukkit.getScheduler().runTask(FortressAPI.getInstance(), () -> ClickEvent.rightClick.get(map.getKey()).accept(e.getPlayer(), map.getKey()));
+				}
+			}
+		}
+	}
+
+	@SneakyThrows
+	private Object getFieldObject(PacketPlayInUseEntity packetPlayInUseEntity) {
+		Field value = packetPlayInUseEntity.getClass().getDeclaredField("b");
+		value.setAccessible(true);
+
+		return value.get(packetPlayInUseEntity);
 	}
 }
