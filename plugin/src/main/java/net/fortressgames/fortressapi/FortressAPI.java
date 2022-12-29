@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 import net.fortressgames.fortressapi.commands.CommandModule;
 import net.fortressgames.fortressapi.commands.cmd.SplineCommand;
-import net.fortressgames.fortressapi.entities.CustomArmorstand;
 import net.fortressgames.fortressapi.listeners.ClickEntityListener;
 import net.fortressgames.fortressapi.listeners.CloseInventoryListener;
 import net.fortressgames.fortressapi.listeners.InventoryClickListener;
