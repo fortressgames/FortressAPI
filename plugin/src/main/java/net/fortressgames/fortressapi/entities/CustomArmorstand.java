@@ -78,28 +78,28 @@ public class CustomArmorstand extends EntityUtil {
 		this.location = customArmorstand.getLocation();
 		this.setPositionRotation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
 
-		this.itemInMainHand = customArmorstand.getItemInMainHand();
-		this.itemInOffHand = customArmorstand.getItemInOffHand();
-		this.helmet = customArmorstand.getHelmet();
-		this.chestplate = customArmorstand.getChestplate();
-		this.leggings = customArmorstand.getLeggings();
-		this.boots = customArmorstand.getBoots();
+		setItemInMainHand(customArmorstand.getItemInMainHand());
+		setItemInOffHand(customArmorstand.getItemInOffHand());
+		setHelmet(customArmorstand.getHelmet());
+		setChestplate(customArmorstand.getChestplate());
+		setLeggings(customArmorstand.getLeggings());
+		setBoots(customArmorstand.getBoots());
 
-		this.headPose = customArmorstand.getHeadPose();
-		this.bodyPose = customArmorstand.getBodyPose();
-		this.leftArmPose = customArmorstand.getLeftArmPose();
-		this.rightArmPose = customArmorstand.getRightArmPose();
-		this.leftLegPose = customArmorstand.getLeftLegPose();
-		this.rightLegPose = customArmorstand.getRightLegPose();
+		setHeadPose(customArmorstand.getHeadPose());
+		setBodyPose(customArmorstand.getBodyPose());
+		setLeftLegPose(customArmorstand.getLeftLegPose());
+		setRightLegPose(customArmorstand.getRightLegPose());
+		setLeftArmPose(customArmorstand.getLeftArmPose());
+		setRightArmPose(customArmorstand.getRightArmPose());
 
-		this.basePlate = customArmorstand.isBasePlate();
-		this.invisible = customArmorstand.isInvisible();
-		this.arms = customArmorstand.isArms();
-		this.small = customArmorstand.isSmall();
-		this.glowing = customArmorstand.isGlowing();
-		this.customNameVisible = customArmorstand.isCustomNameVisible();
+		setBasePlate(customArmorstand.isBasePlate());
+		setInvisible(customArmorstand.isInvisible());
+		setArms(customArmorstand.isArms());
+		setSmall(customArmorstand.isSmall());
+		setGlowing(customArmorstand.isGlowing());
+		setCustomNameVisible(customArmorstand.isCustomNameVisible());
 
-		this.customName = customArmorstand.getCustomName();
+		setCustomName(customArmorstand.getCustomName());
 
 		setSilent(true);
 	}
